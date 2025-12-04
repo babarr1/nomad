@@ -34,16 +34,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="60dp">
 
         <ImageView
             android:id="@+id/profilePic"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/icon_profile"
-            android:background="@drawable/uploader_border"
-            android:scaleType="centerCrop"
-            android:clipToOutline="true"
             android:layout_marginEnd="16dp" />
 
         <LinearLayout
@@ -85,7 +82,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20\nPosts"
+            android:text="0\nPosts"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -95,103 +92,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="98\nFriends"
+            android:text="0\nFriends"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:fontFamily="serif" />
     </LinearLayout>
 
-    <!-- Grid Scroll -->
-    <ScrollView
+    <!-- Grid Scroll with RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/profileStats"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="80dp">
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:alignmentMode="alignMargins"
-            android:rowOrderPreserved="false"
-            android:padding="4dp">
-
-            <!-- 9 Image Posts -->
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/fauna_bird"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/fauna_frog"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/verdant_flower1"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/verdant_flower2"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/verdant_flower4"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/phenomena2"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/phenomena2"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/strata_rock1"
-                android:scaleType="centerCrop" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="130dp"
-                android:layout_columnWeight="1"
-                android:layout_margin="4dp"
-                android:src="@drawable/strata_rock2"
-                android:scaleType="centerCrop" />
-        </GridLayout>
-    </ScrollView>
+        android:layout_marginBottom="80dp"
+        android:padding="4dp" />
 
     <!-- Bottom Navigation -->
     <LinearLayout

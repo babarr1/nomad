@@ -36,9 +36,6 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         signupText = findViewById(R.id.signupText)
 
-        // Add ProgressBar to your layout or create programmatically
-        // For now, we'll just disable the button during loading
-
         // Handle Login Button Click
         loginButton.setOnClickListener {
             val email = emailInput.text.toString().trim()
@@ -71,13 +68,14 @@ class LoginActivity : AppCompatActivity() {
 
             when (result) {
                 is AuthManager.LoginResult.Success -> {
-                    // Store session
+                    // Store session WITH profile picture URL
                     authManager.login(
-                        result.userId,
-                        result.username,
-                        result.email,
-                        result.fullName,
-                        result.sessionToken
+                        userId = result.userId,
+                        username = result.username,
+                        email = result.email,
+                        fullName = result.fullName,
+                        sessionToken = result.sessionToken,
+                        profilePictureUrl = result.profilePictureUrl // FIXED: Now passing profile picture URL
                     )
 
                     Toast.makeText(

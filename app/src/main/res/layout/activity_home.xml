@@ -41,9 +41,7 @@
             android:layout_height="100dp"
             android:src="@drawable/icon_profile"
             android:contentDescription="Profile Picture"
-            android:scaleType="centerCrop"
-            android:padding="4dp"
-            android:clipToOutline="true" />
+             />
 
         <TextView
             android:id="@+id/usernameText"
@@ -183,6 +181,7 @@
             android:src="@drawable/icon_nav1" />
 
         <ImageView
+            android:id="@+id/searchButton"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"

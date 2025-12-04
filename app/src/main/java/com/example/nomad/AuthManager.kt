@@ -34,6 +34,7 @@ class AuthManager(private val context: Context) {
         private const val KEY_EMAIL = "email"
         private const val KEY_FULL_NAME = "full_name"
         private const val KEY_SESSION_TOKEN = "session_token"
+        private const val KEY_PROFILE_PICTURE_URL = "profile_picture_url"
     }
 
     /**
@@ -54,7 +55,7 @@ class AuthManager(private val context: Context) {
     /**
      * Store user session after successful login
      */
-    fun login(userId: Int, username: String, email: String, fullName: String?, sessionToken: String) {
+    fun login(userId: Int, username: String, email: String, fullName: String?, sessionToken: String, profilePictureUrl: String? = null) {
         try {
             prefs.edit().apply {
                 putBoolean(KEY_IS_LOGGED_IN, true)
@@ -63,6 +64,7 @@ class AuthManager(private val context: Context) {
                 putString(KEY_EMAIL, email)
                 putString(KEY_FULL_NAME, fullName)
                 putString(KEY_SESSION_TOKEN, sessionToken)
+                putString(KEY_PROFILE_PICTURE_URL, profilePictureUrl)
                 apply()
             }
             Log.d(TAG, "User session stored: $username")
@@ -135,6 +137,33 @@ class AuthManager(private val context: Context) {
     }
 
     /**
+     * Get logged in user's profile picture URL
+     */
+    fun getProfilePictureUrl(): String? {
+        return try {
+            prefs.getString(KEY_PROFILE_PICTURE_URL, null)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting profile picture URL: ${e.message}", e)
+            null
+        }
+    }
+
+    /**
+     * Update profile picture URL in session
+     */
+    fun updateProfilePicture(profilePictureUrl: String) {
+        try {
+            prefs.edit().apply {
+                putString(KEY_PROFILE_PICTURE_URL, profilePictureUrl)
+                apply()
+            }
+            Log.d(TAG, "Profile picture URL updated")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error updating profile picture: ${e.message}", e)
+        }
+    }
+
+    /**
      * Perform login API call
      */
     suspend fun performLogin(email: String, password: String): LoginResult {
@@ -191,7 +220,8 @@ class AuthManager(private val context: Context) {
                         username = data.getString("username"),
                         email = data.getString("email"),
                         fullName = data.optString("full_name", null),
-                        sessionToken = data.getString("session_token")
+                        sessionToken = data.getString("session_token"),
+                        profilePictureUrl = data.optString("profile_picture_url", null)
                     )
                 } else {
                     LoginResult.Error(message)
@@ -283,7 +313,8 @@ class AuthManager(private val context: Context) {
             val username: String,
             val email: String,
             val fullName: String?,
-            val sessionToken: String
+            val sessionToken: String,
+            val profilePictureUrl: String?
         ) : LoginResult()
 
         data class Error(val message: String) : LoginResult()

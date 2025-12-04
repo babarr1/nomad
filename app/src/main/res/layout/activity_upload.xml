@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_upload"
+    android:padding="16dp">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/icon_back"
+        android:contentDescription="Back" />
+
+    <!-- Upload Box -->
+    <LinearLayout
+        android:id="@+id/uploadBox"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/upload_box_bg"
+        android:padding="24dp">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/icon_gallery"
+            android:tint="#585829"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DRAG PHOTOS HERE"
+            android:textColor="#585829"
+            android:textSize="15sp"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_upload"
+            android:text="Select from device"
+            android:textColor="#1F1F0F"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="6dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav1" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav2" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav3" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav4" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_strata"
+    android:padding="16dp">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/icon_back"
+        android:contentDescription="Back" />
+
+    <!-- Title Banner -->
+    <TextView
+        android:id="@+id/strataTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:background="@drawable/strata_title_bg"
+        android:text="STRATA"
+        android:textColor="#EDE5B0"
+        android:textSize="18sp"
+        android:fontFamily="serif"
+        android:letterSpacing="0.1"
+        android:textStyle="bold" />
+
+    <!-- Scrollable Grid -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/strataTitle"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="80dp">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:alignmentMode="alignMargins"
+            android:rowOrderPreserved="false"
+            android:padding="8dp">
+
+            <!-- Card 1 -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/strata_card_bg">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/strata_rock1"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/strata_card_clip" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-20dp"
+                    android:src="@drawable/uploader1"
+                    android:background="@drawable/uploader_border"
+                    android:clipToOutline="true" />
+            </FrameLayout>
+
+            <!-- Card 2 -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/strata_card_bg">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/strata_rock2"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/strata_card_clip" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-20dp"
+                    android:src="@drawable/uploader2"
+                    android:background="@drawable/uploader_border"
+                    android:clipToOutline="true" />
+            </FrameLayout>
+
+            <!-- Card 3 -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/strata_card_bg">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/strata_rock3"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/strata_card_clip" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-20dp"
+                    android:src="@drawable/uploader3"
+                    android:background="@drawable/uploader_border"
+                    android:clipToOutline="true" />
+            </FrameLayout>
+
+            <!-- Card 4 -->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/strata_card_bg">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/strata_rock4"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/strata_card_clip" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-20dp"
+                    android:src="@drawable/uploader1"
+                    android:background="@drawable/uploader_border"
+                    android:clipToOutline="true" />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/strata_card_bg">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/strata_rock3"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/strata_card_clip" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-20dp"
+                    android:src="@drawable/uploader3"
+                    android:background="@drawable/uploader_border"
+                    android:clipToOutline="true" />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="8dp"
+                android:layout_columnWeight="1"
+                android:background="@drawable/strata_card_bg">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/strata_rock2"
+                    android:scaleType="centerCrop"
+                    android:clipToOutline="true"
+                    android:background="@drawable/strata_card_clip" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-20dp"
+                    android:src="@drawable/uploader2"
+                    android:background="@drawable/uploader_border"
+                    android:clipToOutline="true" />
+            </FrameLayout>
+
+        </GridLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav1" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav2" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav3" />
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/icon_box"
+            android:padding="8dp"
+            android:src="@drawable/icon_nav4" />
+    </LinearLayout>
+
+</RelativeLayout>

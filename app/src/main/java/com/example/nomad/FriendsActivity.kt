@@ -1,4 +1,4 @@
-package com.example.normad
+package com.example.nomad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

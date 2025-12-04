@@ -1,9 +1,11 @@
-package com.example.normad
+package com.example.nomad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class FaunaActivityActivity : AppCompatActivity() {
+import com.example.nomad.R
+
+class FaunaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fauna)

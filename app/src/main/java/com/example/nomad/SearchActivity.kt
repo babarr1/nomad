@@ -13,7 +13,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nomad.AuthManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +22,7 @@ import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 
-class FriendsActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
     private lateinit var authManager: AuthManager
     private lateinit var searchInput: EditText
     private lateinit var recyclerView: RecyclerView
@@ -31,14 +30,14 @@ class FriendsActivity : AppCompatActivity() {
     private lateinit var backButton: ImageView
     private lateinit var sectionTitle: TextView
     private lateinit var resultCount: TextView
-    private lateinit var friendAdapter: FriendAdapter
+    private lateinit var searchAdapter: SearchAdapter
 
     private val BASE_URL = "http://192.168.18.51/nomad_api"
-    private val TAG = "FriendsActivity"
+    private val TAG = "SearchActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friends)
+        setContentView(R.layout.activity_search)
 
         authManager = AuthManager(this)
 
@@ -66,13 +65,19 @@ class FriendsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        friendAdapter = FriendAdapter(emptyList()) { user ->
-            handleUserAction(user)
-        }
+        searchAdapter = SearchAdapter(
+            users = emptyList(),
+            onUserClick = { user ->
+                openUserProfile(user)
+            },
+            onAddFriendClick = { user ->
+                addFriend(user)
+            }
+        )
 
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@FriendsActivity)
-            adapter = friendAdapter
+            layoutManager = LinearLayoutManager(this@SearchActivity)
+            adapter = searchAdapter
         }
     }
 
@@ -121,12 +126,12 @@ class FriendsActivity : AppCompatActivity() {
                     recyclerView.visibility = View.VISIBLE
                     emptyStateText.visibility = View.GONE
                     resultCount.text = "${users.size} user${if (users.size != 1) "s" else ""}"
-                    friendAdapter.updateUsers(users)
+                    searchAdapter.updateUsers(users)
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error loading users: ${e.message}", e)
                 Toast.makeText(
-                    this@FriendsActivity,
+                    this@SearchActivity,
                     "Error loading users: ${e.message}",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -134,7 +139,7 @@ class FriendsActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun searchUsersAPI(query: String, userId: Int): List<Friend> {
+    private suspend fun searchUsersAPI(query: String, userId: Int): List<User> {
         return withContext(Dispatchers.IO) {
             try {
                 Log.d(TAG, "Searching users with query: '$query'")
@@ -182,11 +187,11 @@ class FriendsActivity : AppCompatActivity() {
                     val data = jsonResponse.getJSONObject("data")
                     val usersArray = data.getJSONArray("users")
 
-                    val users = mutableListOf<Friend>()
+                    val users = mutableListOf<User>()
                     for (i in 0 until usersArray.length()) {
                         val userObj = usersArray.getJSONObject(i)
                         users.add(
-                            Friend(
+                            User(
                                 userId = userObj.getInt("user_id"),
                                 username = userObj.getString("username"),
                                 fullName = userObj.getString("full_name"),
@@ -208,10 +213,95 @@ class FriendsActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleUserAction(user: Friend) {
-        // Open profile when clicking on any user
+    private fun openUserProfile(user: User) {
         val intent = Intent(this, ProfileActivity::class.java)
         intent.putExtra("USER_ID", user.userId)
         startActivity(intent)
+    }
+
+    private fun addFriend(user: User) {
+        val currentUserId = authManager.getUserId()
+
+        if (currentUserId == -1) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val result = sendFriendRequest(currentUserId, user.userId)
+
+                if (result) {
+                    Toast.makeText(
+                        this@SearchActivity,
+                        "Friend request sent to ${user.fullName}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Reload users to update friend status
+                    loadUsers(searchInput.text.toString().trim())
+                } else {
+                    Toast.makeText(
+                        this@SearchActivity,
+                        "Failed to send friend request",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error adding friend: ${e.message}", e)
+                Toast.makeText(
+                    this@SearchActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private suspend fun sendFriendRequest(fromUserId: Int, toUserId: Int): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.d(TAG, "Sending friend request from $fromUserId to $toUserId")
+
+                val url = URL("$BASE_URL/add_friend.php")
+                val connection = url.openConnection() as HttpURLConnection
+
+                connection.requestMethod = "POST"
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.doOutput = true
+                connection.doInput = true
+                connection.connectTimeout = 10000
+                connection.readTimeout = 10000
+
+                val jsonBody = JSONObject().apply {
+                    put("user_id", fromUserId)
+                    put("friend_id", toUserId)
+                }
+
+                OutputStreamWriter(connection.outputStream).use { writer ->
+                    writer.write(jsonBody.toString())
+                    writer.flush()
+                }
+
+                val responseCode = connection.responseCode
+                Log.d(TAG, "Response code: $responseCode")
+
+                val response = if (responseCode == HttpURLConnection.HTTP_OK) {
+                    connection.inputStream.bufferedReader().use { it.readText() }
+                } else {
+                    connection.errorStream?.bufferedReader()?.use { it.readText() } ?: ""
+                }
+
+                Log.d(TAG, "Response: $response")
+                connection.disconnect()
+
+                val jsonResponse = JSONObject(response)
+                jsonResponse.getBoolean("success")
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Add friend error: ${e.message}", e)
+                false
+            }
+        }
     }
 }

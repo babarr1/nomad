@@ -16,13 +16,31 @@
         android:src="@drawable/icon_back"
         android:contentDescription="Back" />
 
+    <!-- Network Status Indicator -->
+    <TextView
+        android:id="@+id/networkStatusIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        android:background="@drawable/icon_box"
+        android:text="Offline"
+        android:textColor="#1F1F0F"
+        android:textSize="12sp"
+        android:fontFamily="sans-serif-medium"
+        android:visibility="gone" />
+
     <!-- Notification Banner -->
     <TextView
         android:id="@+id/friendBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="4dp"
+        android:layout_below="@id/backBtn"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:paddingHorizontal="16dp"
         android:paddingVertical="6dp"
         android:background="@drawable/icon_box"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/card_background_dark">
+
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/icon_back"
+        android:contentDescription="Back"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EDIT YOUR BIO"
+        android:textColor="@color/gold_accent"
+        android:textSize="20sp"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/bioEditInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="5"
+        android:maxLines="10"
+        android:gravity="top|start"
+        android:textColor="@color/white"
+        android:textColorHint="#B0A888"
+        android:hint="Tell us about yourself..."
+        android:background="@color/white"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/saveBioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAVE BIO"
+        android:textColor="@color/card_background_dark"
+        android:backgroundTint="@color/gold_accent"
+        android:padding="12dp"
+        android:textStyle="bold" />
+
+</LinearLayout>

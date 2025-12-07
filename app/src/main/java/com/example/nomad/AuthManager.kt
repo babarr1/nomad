@@ -25,7 +25,7 @@ class AuthManager(private val context: Context) {
     // Change this to your computer's local IP address when testing on physical device
     // For emulator, use 10.0.2.2
     // For physical device on same network, use your PC's IP (e.g., 192.168.1.100)
-    private val BASE_URL = "http://192.168.18.51/nomad_api" // Change for physical device
+    private val BASE_URL = "http://192.168.100.10/nomad_api" // Change for physical device
 
     companion object {
         private const val KEY_IS_LOGGED_IN = "is_logged_in"
@@ -35,6 +35,8 @@ class AuthManager(private val context: Context) {
         private const val KEY_FULL_NAME = "full_name"
         private const val KEY_SESSION_TOKEN = "session_token"
         private const val KEY_PROFILE_PICTURE_URL = "profile_picture_url"
+        private const val KEY_BACKGROUND_PICTURE_URL = "background_picture_url"
+        private const val KEY_BIO = "bio"
     }
 
     /**
@@ -55,7 +57,7 @@ class AuthManager(private val context: Context) {
     /**
      * Store user session after successful login
      */
-    fun login(userId: Int, username: String, email: String, fullName: String?, sessionToken: String, profilePictureUrl: String? = null) {
+    fun login(userId: Int, username: String, email: String, fullName: String?, sessionToken: String, profilePictureUrl: String? = null, backgroundPictureUrl: String? = null) {
         try {
             prefs.edit().apply {
                 putBoolean(KEY_IS_LOGGED_IN, true)
@@ -65,9 +67,13 @@ class AuthManager(private val context: Context) {
                 putString(KEY_FULL_NAME, fullName)
                 putString(KEY_SESSION_TOKEN, sessionToken)
                 putString(KEY_PROFILE_PICTURE_URL, profilePictureUrl)
+                putString(KEY_BACKGROUND_PICTURE_URL, backgroundPictureUrl)
+                Log.d(TAG, "AuthManager: Stored background URL: $backgroundPictureUrl")
+                Log.d(TAG, "User session stored: $username")
+                Log.d(TAG, "AuthManager: Stored user ID: $userId")
                 apply()
             }
-            Log.d(TAG, "User session stored: $username")
+
         } catch (e: Exception) {
             Log.e(TAG, "Error storing login session: ${e.message}", e)
         }
@@ -99,6 +105,7 @@ class AuthManager(private val context: Context) {
             null
         }
     }
+
 
     /**
      * Get logged in user's email
@@ -136,6 +143,20 @@ class AuthManager(private val context: Context) {
         }
     }
 
+
+    // Getter for background URL
+    fun getBackgroundPictureUrl(): String? {
+        return prefs.getString(KEY_BACKGROUND_PICTURE_URL, null)
+    }
+
+    // Setter called after successful background image upload
+    fun updateBackgroundPicture(backgroundPictureUrl: String) {
+        prefs.edit().apply {
+            putString(KEY_BACKGROUND_PICTURE_URL, backgroundPictureUrl)
+            apply()
+        }
+    }
+
     /**
      * Get logged in user's profile picture URL
      */
@@ -163,6 +184,20 @@ class AuthManager(private val context: Context) {
         }
     }
 
+    // Inside AuthManager.kt
+
+    // Getter
+    fun getBio(): String? {
+        return prefs.getString(KEY_BIO, null)
+    }
+
+    // Setter
+    fun updateBio(newBio: String) {
+        prefs.edit().apply {
+            putString(KEY_BIO, newBio)
+            apply()
+        }
+    }
     /**
      * Perform login API call
      */
@@ -226,6 +261,7 @@ class AuthManager(private val context: Context) {
                 } else {
                     LoginResult.Error(message)
                 }
+
 
             } catch (e: Exception) {
                 Log.e(TAG, "Login error: ${e.message}", e)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_change_profile_pic"
+        android:title="Change Profile Picture" />
+
+    <item
+        android:id="@+id/action_change_background"
+        android:title="Change Background Picture" />
+
+    <item
+        android:id="@+id/action_edit_bio"
+        android:title="Edit Bio" />
+
+</menu>

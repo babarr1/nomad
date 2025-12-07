@@ -50,5 +50,13 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    // CardView for post cards
+    implementation("androidx.cardview:cardview:1.0.0")
+// RecyclerView (if using RecyclerView instead of GridLayout)
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+// CircleImageView for profile pictures
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+// Material Design
+    implementation("com.google.android.material:material:1.11.0")
 
 }

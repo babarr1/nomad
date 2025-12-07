@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_home">
 
-    <!-- Back Button (no box) -->
     <ImageView
         android:id="@+id/backBtn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_margin="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/icon_back"
         android:contentDescription="Back"
         android:layout_alignParentStart="true" />
 
-    <!-- Connect Button (inside yellow box) -->
     <ImageView
         android:id="@+id/connectBtn"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
-        android:layout_margin="20dp"
-        android:padding="8dp"
-        android:background="@drawable/icon_box"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:src="@drawable/icon_connect"
         android:contentDescription="Connect"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:padding="8dp"
+        android:background="@drawable/icon_box"/>
 
-    <!-- Profile Section -->
     <LinearLayout
         android:id="@+id/profileLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp">
 
         <ImageView
             android:id="@+id/profileImage"
@@ -41,177 +42,199 @@
             android:layout_height="100dp"
             android:src="@drawable/icon_profile"
             android:contentDescription="Profile Picture"
-             />
+            app:civ_border_color="@color/gold_border"
+            app:civ_border_width="2dp"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/usernameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="username"
-            android:textColor="#D6C84E"
-            android:textSize="16sp"
+            android:textColor="@color/gold_text"
+            android:textSize="18sp"
             android:layout_marginTop="8dp" />
     </LinearLayout>
 
-    <!-- Category Grid -->
     <GridLayout
         android:id="@+id/categoryGrid"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/profileLayout"
-        android:layout_marginTop="40dp"
-        android:alignmentMode="alignMargins"
+        android:layout_centerHorizontal="true"
         android:columnCount="2"
-        android:padding="24dp"
-        android:gravity="center">
+        android:useDefaultMargins="false"
+        android:padding="0dp"
+        android:layout_marginTop="10dp"
+        android:rowOrderPreserved="true">
 
-        <!-- FAUNA -->
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:id="@+id/faunaCard"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/card_shape">
+            android:background="@drawable/fauna_card_bg">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/icon_fauna"
-                android:contentDescription="Fauna Icon" />
+                android:contentDescription="Fauna Icon"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="FAUNA"
-                android:textColor="#D6C84E"
+                android:textColor="@color/gold_text"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
 
-        <!-- VERDANT -->
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:id="@+id/verdantCard"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/card_shape">
+            android:background="@drawable/verdant_card_bg">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/icon_verdant"
-                android:contentDescription="Verdant Icon" />
+                android:contentDescription="Verdant Icon"
+              />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="VERDANT"
-                android:textColor="#D6C84E"
+                android:textColor="@color/gold_text"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
 
-        <!-- STRATA -->
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:id="@+id/strataCard"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/card_shape">
+            android:background="@drawable/strata_card_bg">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/icon_strata"
-                android:contentDescription="Strata Icon" />
+                android:contentDescription="Strata Icon"
+               />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="STRATA"
-                android:textColor="#D6C84E"
+                android:textColor="@color/gold_text"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
 
-        <!-- PHENOMENON -->
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_margin="10dp"
+            android:id="@+id/phenomenonCard"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/card_shape">
+            android:background="@drawable/phenomena_card_bg">
 
             <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/icon_phenomenon"
-                android:contentDescription="Phenomenon Icon" />
+                android:contentDescription="Phenomenon Icon"
+              />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="PHENOMENON"
-                android:textColor="#D6C84E"
+                android:textColor="@color/gold_text"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp" />
         </LinearLayout>
     </GridLayout>
-
-    <!-- Bottom Navigation -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/bottomNavLayout"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="5"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
+        android:gravity="center_vertical" android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
 
         <ImageView
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/icon_box"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/icon_nav1"
             android:padding="8dp"
-            android:src="@drawable/icon_nav1" />
+            android:background="@drawable/icon_box" />
 
         <ImageView
             android:id="@+id/searchButton"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/icon_box"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/icon_nav2"
             android:padding="8dp"
-            android:src="@drawable/icon_nav2" />
+            android:background="@drawable/icon_box" />
 
         <ImageView
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/icon_box"
+            android:id="@+id/navAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/icon_nav3"
             android:padding="8dp"
-            android:src="@drawable/icon_nav3" />
+            android:background="@drawable/icon_box" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
         <ImageView
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/icon_box"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/icon_nav4"
             android:padding="8dp"
-            android:src="@drawable/icon_nav4" />
+            android:background="@drawable/icon_box" />
 
         <ImageView
             android:id="@+id/logoutButton"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_margin="8dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/logout_icon"
+            android:padding="8dp"
             android:background="@drawable/icon_box" />
 
     </LinearLayout>
+    <ImageView
+        android:id="@+id/cameraBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/icon_hand"
+        android:contentDescription="Side Action" />
 
 </RelativeLayout>

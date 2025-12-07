@@ -14,7 +14,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="8dp"
         android:src="@drawable/icon_back"
-        android:contentDescription="Back" />
+        android:contentDescription="Back"
+        android:clickable="true"
+        android:focusable="true" />
 
     <!-- Title Banner -->
     <TextView
@@ -33,176 +35,61 @@
         android:letterSpacing="0.1"
         android:textStyle="bold" />
 
-    <!-- Scrollable Grid -->
-    <ScrollView
+    <!-- Filter/Sort Options -->
+    <LinearLayout
+        android:id="@+id/filterLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phenomenaTitle"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="16dp">
+
+        <TextView
+            android:id="@+id/allPostsBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="All Posts"
+            android:textColor="#EDE5B0"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="@drawable/filter_selected_bg"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/friendsPostsBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Friends"
+            android:textColor="#EDE5B0"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="@drawable/filter_unselected_bg"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+    <!-- Scrollable Feed with Scrollbar -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/phenomenaRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/phenomenaTitle"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="80dp">
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="2"
-            android:alignmentMode="alignMargins"
-            android:rowOrderPreserved="false"
-            android:padding="8dp">
-
-            <!-- Card 1 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                android:background="@drawable/phenomena_card_bg">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/phenomena1"
-                    android:scaleType="centerCrop"
-                    android:clipToOutline="true"
-                    android:background="@drawable/phenomena_card_clip" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="-20dp"
-                    android:src="@drawable/uploader1"
-                    android:background="@drawable/uploader_border"
-                    android:clipToOutline="true" />
-            </FrameLayout>
-
-            <!-- Card 2 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                android:background="@drawable/phenomena_card_bg">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/phenomena2"
-                    android:scaleType="centerCrop"
-                    android:clipToOutline="true"
-                    android:background="@drawable/phenomena_card_clip" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="-20dp"
-                    android:src="@drawable/uploader2"
-                    android:background="@drawable/uploader_border"
-                    android:clipToOutline="true" />
-            </FrameLayout>
-
-            <!-- Card 3 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                android:background="@drawable/phenomena_card_bg">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/phenomena3"
-                    android:scaleType="centerCrop"
-                    android:clipToOutline="true"
-                    android:background="@drawable/phenomena_card_clip" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="-20dp"
-                    android:src="@drawable/uploader3"
-                    android:background="@drawable/uploader_border"
-                    android:clipToOutline="true" />
-            </FrameLayout>
-
-            <!-- Card 4 -->
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                android:background="@drawable/phenomena_card_bg">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/phenomena4"
-                    android:scaleType="centerCrop"
-                    android:clipToOutline="true"
-                    android:background="@drawable/phenomena_card_clip" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="-20dp"
-                    android:src="@drawable/uploader1"
-                    android:background="@drawable/uploader_border"
-                    android:clipToOutline="true" />
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                android:background="@drawable/phenomena_card_bg">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/phenomena3"
-                    android:scaleType="centerCrop"
-                    android:clipToOutline="true"
-                    android:background="@drawable/phenomena_card_clip" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="-20dp"
-                    android:src="@drawable/uploader3"
-                    android:background="@drawable/uploader_border"
-                    android:clipToOutline="true" />
-            </FrameLayout>
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_margin="8dp"
-                android:layout_columnWeight="1"
-                android:background="@drawable/phenomena_card_bg">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/phenomena2"
-                    android:scaleType="centerCrop"
-                    android:clipToOutline="true"
-                    android:background="@drawable/phenomena_card_clip" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="-20dp"
-                    android:src="@drawable/uploader2"
-                    android:background="@drawable/uploader_border"
-                    android:clipToOutline="true" />
-            </FrameLayout>
-
-        </GridLayout>
-    </ScrollView>
+        android:layout_below="@id/filterLayout"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="80dp"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
+        android:scrollbarTrackVertical="@drawable/scrollbar_track"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp" />
 
     <!-- Bottom Navigation -->
     <LinearLayout
@@ -214,36 +101,48 @@
         android:layout_marginBottom="20dp">
 
         <ImageView
+            android:id="@+id/navHome"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
             android:background="@drawable/icon_box"
             android:padding="8dp"
-            android:src="@drawable/icon_nav1" />
+            android:src="@drawable/icon_nav1"
+            android:clickable="true"
+            android:focusable="true" />
 
         <ImageView
+            android:id="@+id/navSearch"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
             android:background="@drawable/icon_box"
             android:padding="8dp"
-            android:src="@drawable/icon_nav2" />
+            android:src="@drawable/icon_nav2"
+            android:clickable="true"
+            android:focusable="true" />
 
         <ImageView
+            android:id="@+id/navAdd"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
             android:background="@drawable/icon_box"
             android:padding="8dp"
-            android:src="@drawable/icon_nav3" />
+            android:src="@drawable/icon_nav3"
+            android:clickable="true"
+            android:focusable="true" />
 
         <ImageView
+            android:id="@+id/navProfile"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
             android:background="@drawable/icon_box"
             android:padding="8dp"
-            android:src="@drawable/icon_nav4" />
+            android:src="@drawable/icon_nav4"
+            android:clickable="true"
+            android:focusable="true" />
     </LinearLayout>
 
 </RelativeLayout>

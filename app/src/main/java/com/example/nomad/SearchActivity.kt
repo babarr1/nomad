@@ -32,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var resultCount: TextView
     private lateinit var searchAdapter: SearchAdapter
 
-    private val BASE_URL = "http://192.168.18.51/nomad_api"
+    private val BASE_URL = "http://192.168.100.10/nomad_api"
     private val TAG = "SearchActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {

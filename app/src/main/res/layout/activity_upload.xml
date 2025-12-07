@@ -6,56 +6,146 @@
     android:background="@drawable/bg_upload"
     android:padding="16dp">
 
-    <!-- Back Button -->
-    <ImageView
-        android:id="@+id/backBtn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/icon_back"
-        android:contentDescription="Back" />
-
-    <!-- Upload Box -->
-    <LinearLayout
-        android:id="@+id/uploadBox"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/upload_box_bg"
-        android:padding="24dp">
+    <RelativeLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/icon_gallery"
-            android:tint="#585829"
-            android:layout_marginBottom="16dp" />
+            android:id="@+id/backBtn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon_back"
+            android:contentDescription="Back"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DRAG PHOTOS HERE"
-            android:textColor="#585829"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-medium"
-            android:layout_marginBottom="24dp" />
+            android:layout_centerInParent="true"
+            android:text="POST DISCOVERY"
+            android:textColor="@color/gold_accent"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerLayout"
+        android:layout_above="@id/bottomNavLayout"
+        android:scrollbarStyle="outsideOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_upload"
-            android:text="Select from device"
-            android:textColor="#1F1F0F"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="6dp"
-            android:textSize="14sp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
-    <!-- Bottom Navigation -->
+            <RelativeLayout
+                android:id="@+id/imageSelectionArea"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/card_shape">
+
+                <ImageView
+                    android:id="@+id/selectedImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/icon_gallery"
+                    android:contentDescription="Selected Image Preview"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+                <LinearLayout
+                    android:id="@+id/initialPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#A0000000"> <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/icon_gallery"
+                    android:layout_marginBottom="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tap to select image"
+                        android:textColor="@color/gold_accent"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/inputContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"> <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CATEGORY"
+                android:textColor="@color/gold_accent"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp"/>
+
+                <Spinner
+                    android:id="@+id/categorySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:minHeight="48dp"
+                    android:padding="8dp"
+                    android:background="@drawable/follow_button_bg"
+                    android:popupBackground="@color/card_background_dark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DESCRIPTION / CAPTION"
+                    android:textColor="@color/gold_accent"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp"/>
+
+                <EditText
+                    android:id="@+id/captionInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="4"
+                    android:maxLines="8"
+                    android:gravity="top|start"
+                    android:hint="Describe your discovery..."
+                    android:textColor="@color/gold_accent"
+                    android:textColorHint="@color/light_gold_accent"
+                    android:background="@drawable/button_upload"
+                    android:padding="10dp"
+                    android:layout_marginBottom="24dp"/>
+
+                <Button
+                    android:id="@+id/postButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="POST DISCOVERY"
+                    android:textColor="@color/card_background_dark"
+                    android:backgroundTint="@color/gold_accent"
+                    android:padding="12dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
     <LinearLayout
+        android:id="@+id/bottomNavLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -64,6 +154,7 @@
         android:layout_marginBottom="20dp">
 
         <ImageView
+            android:id="@+id/navHome"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
@@ -72,6 +163,7 @@
             android:src="@drawable/icon_nav1" />
 
         <ImageView
+            android:id="@+id/navSearch"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
@@ -80,20 +172,20 @@
             android:src="@drawable/icon_nav2" />
 
         <ImageView
+            android:id="@+id/navAdd"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_margin="8dp"
             android:background="@drawable/icon_box"
             android:padding="8dp"
-            android:src="@drawable/icon_nav3" />
-
-        <ImageView
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/icon_box"
-            android:padding="8dp"
-            android:src="@drawable/icon_nav4" />
+            android:src="@drawable/icon_nav3" /> <ImageView
+        android:id="@+id/navProfile"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/icon_box"
+        android:padding="8dp"
+        android:src="@drawable/icon_nav4" />
     </LinearLayout>
 
 </RelativeLayout>

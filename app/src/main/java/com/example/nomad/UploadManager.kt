@@ -16,7 +16,7 @@ class UploadManager(private val context: Context) {
     private val TAG = "UploadManager"
 
     // NOTE: Use the correct BASE_URL for your setup (e.g., http://10.0.2.2/nomad_api for emulator)
-    private val BASE_URL = "http://192.168.100.10/nomad_api"
+    private val BASE_URL = "http://192.168.100.15/nomad_api"
     private val BOUNDARY = "*****" + System.currentTimeMillis() + "*****"
     private val LINE_FEED = "\r\n"
 

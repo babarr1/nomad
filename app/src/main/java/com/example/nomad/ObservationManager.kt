@@ -16,7 +16,7 @@ class ObservationManager(private val context: Context) {
     private val TAG = "ObservationManager"
 
     // NOTE: Use the correct BASE_URL for your setup
-    private val BASE_URL = "http://192.168.100.10/nomad_api"
+    private val BASE_URL = "http://192.168.100.15/nomad_api"
 
     /**
      * Data class to match the observation table columns (same as FaunaItem, but generalized)

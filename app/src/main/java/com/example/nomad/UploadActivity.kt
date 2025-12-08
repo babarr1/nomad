@@ -8,15 +8,15 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 
 class UploadActivity : AppCompatActivity() {
 
-    // --- Constants and Variables ---
-    private val PICK_IMAGE_REQUEST = 100 // Request code for the gallery Intent
+    private val PICK_IMAGE_REQUEST = 100
     private var selectedImageUri: Uri? = null
     private var selectedCategoryId: Int = -1
 
@@ -25,10 +25,9 @@ class UploadActivity : AppCompatActivity() {
     private lateinit var captionInput: EditText
     private lateinit var postButton: Button
     private lateinit var uploadManager: UploadManager
-    private lateinit var initialPlaceholder: LinearLayout // For the "Tap to select image" view
-    private lateinit var inputContainer: LinearLayout // Container for category/caption inputs
+    private lateinit var initialPlaceholder: LinearLayout
+    private lateinit var inputContainer: LinearLayout
 
-    // Corresponds to the category IDs in your 'category' table (from your DB screenshot)
     private val categoriesMap = mapOf(
         "FAUNA" to 1,
         "VERDANT" to 2,
@@ -40,7 +39,6 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
 
-        // 1. Initialize views and manager
         selectedImageView = findViewById(R.id.selectedImageView)
         categorySpinner = findViewById(R.id.categorySpinner)
         captionInput = findViewById(R.id.captionInput)
@@ -49,35 +47,25 @@ class UploadActivity : AppCompatActivity() {
         inputContainer = findViewById(R.id.inputContainer)
         uploadManager = UploadManager(this)
 
-        // --- NEW: Check for incoming URI from Camera/Gallery ---
         val incomingUri: Uri? = intent.data
         if (incomingUri != null) {
-            // An image URI was passed directly (from the swipe/camera)
             handleImageSelection(incomingUri)
         } else {
-            // No URI was passed, so prompt the user to select one (via the icon/button click)
             openImagePicker()
         }
 
-        // 2. Setup UI actions
         setupCategorySpinner()
         findViewById<ImageView>(R.id.backBtn).setOnClickListener { finish() }
 
-        // Clicking the selection area (including the placeholder) opens the picker
         val selectionArea = findViewById<RelativeLayout>(R.id.imageSelectionArea)
         selectionArea.setOnClickListener { openImagePicker() }
 
-        // Final Post Action
         postButton.setOnClickListener { performUpload() }
 
-        // 3. Initial state: Prompt user to select an image immediately
         openImagePicker()
     }
 
-    // --- Helper Functions ---
-
     private fun setupCategorySpinner() {
-        // We add "Select Category" as the first prompt
         val categoryNamesWithPrompt = mutableListOf("Select Category").apply {
             addAll(categoriesMap.keys.toList())
         }
@@ -91,13 +79,9 @@ class UploadActivity : AppCompatActivity() {
 
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                if (position == 0) {
-                    selectedCategoryId = -1 // Prompt selected
-                } else {
-                    val selectedName = categoryNamesWithPrompt[position]
-                    selectedCategoryId = categoriesMap[selectedName] ?: -1
-                }
+                selectedCategoryId = if (position == 0) -1 else categoriesMap[categoryNamesWithPrompt[position]] ?: -1
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {
                 selectedCategoryId = -1
             }
@@ -110,24 +94,17 @@ class UploadActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    // --- Image Selection & Result Handling ---
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PICK_IMAGE_REQUEST) {
             if (resultCode == RESULT_OK && data != null) {
-                val imageUri = data.data
-                if (imageUri != null) {
-                    handleImageSelection(imageUri)
-                    return
+                data.data?.let {
+                    handleImageSelection(it)
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                // If the user backs out of the gallery, send them back to the previous screen (Home)
-                if (selectedImageUri == null) {
-                    Toast.makeText(this, "Upload cancelled.", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
+            } else if (resultCode == RESULT_CANCELED && selectedImageUri == null) {
+                Toast.makeText(this, "Upload cancelled.", Toast.LENGTH_SHORT).show()
+                finish()
             }
         }
     }
@@ -135,44 +112,33 @@ class UploadActivity : AppCompatActivity() {
     private fun handleImageSelection(imageUri: Uri) {
         selectedImageUri = imageUri
 
-        // Show the image and hide the placeholder text
-        Picasso.get()
-            .load(imageUri)
-            .into(selectedImageView)
+        Picasso.get().load(imageUri).into(selectedImageView)
 
         initialPlaceholder.visibility = View.GONE
-
-        // Reveal the input fields now that an image is selected
         inputContainer.visibility = View.VISIBLE
     }
 
-    // --- Upload Logic ---
-
-// --- Upload Logic ---
-
+    // ✅ ✅ ✅ OFFLINE + ONLINE UPLOAD LOGIC
     private fun performUpload() {
-        val caption = captionInput.text.toString().trim()
 
-        // Disable button immediately to prevent double-click
+        val caption = captionInput.text.toString().trim()
         postButton.isEnabled = false
 
-        // 1. Initial Quick Checks
         if (selectedImageUri == null) {
             Toast.makeText(this, "Please select an image first.", Toast.LENGTH_SHORT).show()
             postButton.isEnabled = true
             return
         }
+
         if (selectedCategoryId == -1) {
             Toast.makeText(this, "Please select a valid category.", Toast.LENGTH_SHORT).show()
             postButton.isEnabled = true
             return
         }
 
-        // 2. Combined Caption Validation (FIXED the database insertion issue)
         if (caption.length < 5) {
-            Toast.makeText(this, "Please enter a descriptive caption (minimum 5 characters).", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Caption must be at least 5 characters.", Toast.LENGTH_SHORT).show()
             postButton.isEnabled = true
-            postButton.text = "POST DISCOVERY"
             return
         }
 
@@ -180,15 +146,54 @@ class UploadActivity : AppCompatActivity() {
         val userId = authManager.getUserId()
 
         if (userId == -1) {
-            Toast.makeText(this, "User not logged in. Please log in again.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
             postButton.isEnabled = true
             return
         }
 
-        // Proceed to upload state
         postButton.text = "Uploading..."
 
-        CoroutineScope(Dispatchers.Main).launch {
+        // ✅ ✅ ✅ OFFLINE CHECK
+        if (!isInternetAvailable(this)) {
+
+            // ✅ SAVE TO LOCAL QUEUE
+            val inputStream = contentResolver.openInputStream(selectedImageUri!!)
+            val fileName = "offline_${System.currentTimeMillis()}.jpg"
+            val file = File(filesDir, fileName)
+
+            inputStream?.use { input ->
+                file.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+
+
+            val db = AppDatabase.getDatabase(this)
+            val dao = db.pendingUploadDao()
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                val pending = PendingUploadEntity(
+                    imagePath = file.absolutePath,   // ✅ REAL FILE PATH NOW
+                    caption = caption,
+                    categoryId = selectedCategoryId
+                )
+
+                dao.insertUpload(pending)
+            }
+
+            Toast.makeText(
+                this,
+                "No internet. Post saved and will upload automatically.",
+                Toast.LENGTH_LONG
+            ).show()
+
+            finish()
+            return
+        }
+
+        // ✅ ✅ ✅ NORMAL ONLINE UPLOAD
+        lifecycleScope.launch {
+
             val result = uploadManager.uploadDiscovery(
                 userId = userId,
                 categoryId = selectedCategoryId,
@@ -198,7 +203,6 @@ class UploadActivity : AppCompatActivity() {
 
             if (result is UploadManager.UploadResult.Success) {
 
-                // --- NEW NAVIGATION LOGIC ---
                 val categoryActivityClass = when (selectedCategoryId) {
                     1 -> FaunaActivity::class.java
                     2 -> VerdantActivity::class.java
@@ -208,15 +212,19 @@ class UploadActivity : AppCompatActivity() {
                 }
 
                 val intent = Intent(this@UploadActivity, categoryActivityClass).apply {
-                    // Clears activity history so the back button goes Home, not back to Upload
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 }
                 startActivity(intent)
-               // Close the upload screen
                 finish()
-                // --- END NEW NAVIGATION LOGIC ---
+
             } else if (result is UploadManager.UploadResult.Error) {
-                Toast.makeText(this@UploadActivity, "Upload failed: ${result.message}", Toast.LENGTH_LONG).show()
+
+                Toast.makeText(
+                    this@UploadActivity,
+                    "Upload failed: ${result.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+
                 postButton.isEnabled = true
                 postButton.text = "POST DISCOVERY"
             }

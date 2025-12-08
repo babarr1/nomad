@@ -25,7 +25,7 @@ class AuthManager(private val context: Context) {
     // Change this to your computer's local IP address when testing on physical device
     // For emulator, use 10.0.2.2
     // For physical device on same network, use your PC's IP (e.g., 192.168.1.100)
-    private val BASE_URL = "http://192.168.100.10/nomad_api" // Change for physical device
+    private val BASE_URL = "http://192.168.100.15/nomad_api" // Change for physical device
 
     companion object {
         private const val KEY_IS_LOGGED_IN = "is_logged_in"

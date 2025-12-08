@@ -12,7 +12,7 @@ import java.net.URL
 
 class PostActionManager(private val context: Context) {
     private val TAG = "PostActionManager"
-    private val BASE_URL = "http://192.168.100.10/nomad_api" // Use your correct IP
+    private val BASE_URL = "http://192.168.100.15/nomad_api" // Use your correct IP
 
     suspend fun deleteObservation(observationId: Int, userId: Int): Boolean {
         return withContext(Dispatchers.IO) {

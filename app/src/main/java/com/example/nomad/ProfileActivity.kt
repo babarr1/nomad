@@ -42,7 +42,7 @@ class ProfileActivity : AppCompatActivity() {
     private val PICK_BACKGROUND_REQUEST = 101 // New unique request code for background
     private var viewedUserId: Int = -1
     private var isOwnProfile: Boolean = false
-    private val BASE_URL = "http://192.168.100.10/nomad_api"
+    private val BASE_URL = "http://192.168.100.15/nomad_api"
     private val TAG = "ProfileActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {

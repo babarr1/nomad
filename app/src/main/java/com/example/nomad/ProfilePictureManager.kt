@@ -21,7 +21,7 @@ import java.net.URL
  */
 class ProfilePictureManager(private val context: Context) {
     // NOTE: This IP should match your AuthManager and other manager files (e.g., 10.0.2.2 for emulator)
-    private val BASE_URL = "http://192.168.100.10/nomad_api"
+    private val BASE_URL = "http://192.168.100.15/nomad_api"
     private val TAG = "ProfilePictureManager"
     private val BOUNDARY = "---" + System.currentTimeMillis() + "---"
     private val LINE_FEED = "\r\n"

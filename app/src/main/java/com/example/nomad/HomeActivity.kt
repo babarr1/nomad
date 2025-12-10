@@ -108,6 +108,8 @@ class HomeActivity : Activity() {
         verdantCard.setOnClickListener { startActivity(Intent(this, VerdantActivity::class.java)) }
         strataCard.setOnClickListener { startActivity(Intent(this, StrataActivity::class.java)) }
         phenomenonCard.setOnClickListener { startActivity(Intent(this, PhenomenaActivity::class.java)) }
+
+        PendingSyncManager.syncPendingUploads(this)
     }
 
     /**

@@ -1,18 +1,19 @@
 package com.example.nomad
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.os.Bundle
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.example.nomad.R
+import com.google.firebase.auth.FirebaseAuth
+
 class SignupActivity : AppCompatActivity() {
+
     private lateinit var authManager: AuthManager
+    private lateinit var firebaseAuth: FirebaseAuth
+
     private lateinit var nameInput: EditText
     private lateinit var emailInput: EditText
     private lateinit var passwordInput: EditText
@@ -24,16 +25,16 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
         authManager = AuthManager(this)
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        // Initialize views
         nameInput = findViewById(R.id.nameInput)
         emailInput = findViewById(R.id.emailInput)
         passwordInput = findViewById(R.id.passwordInput)
         signupButton = findViewById(R.id.signupButton)
         loginText = findViewById(R.id.loginText)
 
-        // Handle Sign Up Button Click
         signupButton.setOnClickListener {
+
             val name = nameInput.text.toString().trim()
             val email = emailInput.text.toString().trim()
             val password = passwordInput.text.toString()
@@ -44,54 +45,70 @@ class SignupActivity : AppCompatActivity() {
             }
 
             if (password.length < 6) {
-                Toast.makeText(this, "Password must be at least 6 characters long.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Password must be at least 6 characters.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Perform signup
             performSignup(name, email, password)
         }
 
-        // Handle "already have an account? login" Click
         loginText.setOnClickListener {
             navigateToLogin()
         }
     }
 
     private fun performSignup(name: String, email: String, password: String) {
-        // Disable button to prevent multiple clicks
+
         signupButton.isEnabled = false
         signupButton.text = "Creating account..."
 
-        // Launch coroutine for network call
-        CoroutineScope(Dispatchers.Main).launch {
-            val result = authManager.performSignup(name, email, password)
+        // ✅ STEP 1: Firebase Cloud Signup
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
 
-            when (result) {
-                is AuthManager.SignupResult.Success -> {
+                if (task.isSuccessful) {
+
+                    // ✅ STEP 2: Local XAMPP Signup
+                    CoroutineScope(Dispatchers.Main).launch {
+
+                        val result = authManager.performSignup(name, email, password)
+
+                        when (result) {
+                            is AuthManager.SignupResult.Success -> {
+                                Toast.makeText(
+                                    this@SignupActivity,
+                                    "Account created! Please log in.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                                navigateToLogin()
+                            }
+
+                            is AuthManager.SignupResult.Error -> {
+                                Toast.makeText(
+                                    this@SignupActivity,
+                                    result.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                                signupButton.isEnabled = true
+                                signupButton.text = "SIGN UP"
+                            }
+                        }
+                    }
+
+                } else {
+
                     Toast.makeText(
-                        this@SignupActivity,
-                        "Account created successfully! Please log in.",
+                        this,
+                        "Cloud Signup Failed: ${task.exception?.message}",
                         Toast.LENGTH_LONG
                     ).show()
 
-                    // Navigate to login
-                    navigateToLogin()
-                }
-
-                is AuthManager.SignupResult.Error -> {
-                    Toast.makeText(
-                        this@SignupActivity,
-                        result.message,
-                        Toast.LENGTH_LONG
-                    ).show()
-
-                    // Re-enable button
                     signupButton.isEnabled = true
-                    signupButton.text = "sign up"
+                    signupButton.text = "SIGN UP"
                 }
             }
-        }
     }
 
     private fun navigateToLogin() {
